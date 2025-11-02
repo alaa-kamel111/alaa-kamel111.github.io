@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
   <head>
     <meta charset="UTF-8" />
     <title>تسبيح</title>
@@ -32,30 +32,32 @@
         direction: rtl;
       }
 
-      .tasbeeh-img {
-        width: 180px;
-        margin-bottom: 25px;
-        filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.6));
-        border-radius: 10px;
-      }
-
       .logo {
         position: absolute;
-        top: 60px;
-        left: 70px;
-        width: 150px;
-        height: 150px;
+        top: 40px;
+        left: 40px;
+        width: 120px;
+        height: 120px;
         object-fit: contain;
         z-index: 10;
         filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.6));
         animation: glow 4s ease-in-out infinite alternate;
       }
 
+      @keyframes glow {
+        from {
+          filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.4));
+        }
+        to {
+          filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.8));
+        }
+      }
+
       .site-link {
         position: absolute;
-        top: 220px;
-        left: 60px;
-        font-size: 0.95rem;
+        top: 170px;
+        left: 30px;
+        font-size: 0.9rem;
         color: var(--gold);
         text-decoration: none;
         font-weight: bold;
@@ -90,14 +92,14 @@
         border-radius: 20px;
         box-shadow: 0 0 25px rgba(212, 175, 55, 0.4),
           inset 0 0 15px rgba(212, 175, 55, 0.2);
-        padding: 50px 60px;
+        padding: 40px 30px;
         text-align: center;
-        width: 600px;
-        position: relative;
+        width: 90%;
+        max-width: 600px;
       }
 
       #status {
-        font-size: 2rem;
+        font-size: 1.8rem;
         font-weight: 600;
         margin: 20px 0 30px;
         color: var(--gold);
@@ -124,14 +126,48 @@
         box-shadow: 0 0 25px rgba(212, 175, 55, 0.5);
       }
 
-      @keyframes pop {
-        0% {
-          transform: scale(0.95);
-          opacity: 0.6;
+      /* الميديا كويري عشان التليفون والتابلت */
+      @media (max-width: 768px) {
+        .logo {
+          top: 20px;
+          left: 20px;
+          width: 90px;
+          height: 90px;
         }
-        100% {
-          transform: scale(1);
-          opacity: 1;
+
+        .site-link {
+          top: 130px;
+          left: 20px;
+          font-size: 0.8rem;
+        }
+
+        .box {
+          width: 85%;
+          padding: 25px 20px;
+        }
+
+        #status {
+          font-size: 1.4rem;
+        }
+
+        #startBtn {
+          font-size: 1rem;
+          padding: 10px 30px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .box {
+          width: 90%;
+          padding: 20px;
+        }
+
+        #status {
+          font-size: 1.3rem;
+        }
+
+        #startBtn {
+          padding: 8px 25px;
         }
       }
     </style>
@@ -139,7 +175,11 @@
 
   <body>
     <img src="logo.png" alt="Logo" class="logo" />
-    <a href="https://www.facebook.com/alaa.kamel.794628" target="_blank" class="site-link">
+    <a
+      href="https://www.facebook.com/alaa.kamel.794628"
+      target="_blank"
+      class="site-link"
+    >
       Alaa kamel
     </a>
 
@@ -156,13 +196,11 @@
 
       function updateMessage() {
         const Status = document.getElementById("status");
-
         count++;
 
         if (phase === 1) {
           Status.textContent = "سبحان الله - " + count;
           Status.style.color = "white";
-
           if (count === 33) {
             phase = 2;
             count = 0;
@@ -170,7 +208,6 @@
         } else if (phase === 2) {
           Status.textContent = "الحمد لله - " + count;
           Status.style.color = "red";
-
           if (count === 33) {
             phase = 3;
             count = 0;
@@ -178,7 +215,6 @@
         } else if (phase === 3) {
           Status.textContent = "الله أكبر - " + count;
           Status.style.color = "#d4af37";
-
           if (count === 33) {
             phase = 4;
             count = 0;
@@ -190,8 +226,13 @@
 
           clearInterval(intervalID);
           isRunning = false;
-          document.getElementById("startBtn").textContent = "ابدأ";
-          setTimeout(() => alert("في ميزان حسناتكم"), 1000);
+          document.getElementById("startBtn").textContent = "ابدأ من جديد";
+
+          // بعد التسبيح تقدر تبدأ من الأول
+          phase = 1;
+          count = 0;
+
+          setTimeout(() => alert("في ميزان حسناتكم 🌸"), 1000);
         }
       }
 
@@ -199,12 +240,10 @@
         const startBtn = document.getElementById("startBtn");
 
         if (!isRunning) {
-          // يبدأ التسبيح
           isRunning = true;
           startBtn.textContent = "إيقاف";
           intervalID = setInterval(updateMessage, 500);
         } else {
-          // يوقف التسبيح مؤقتًا
           isRunning = false;
           startBtn.textContent = "استكمال";
           clearInterval(intervalID);
